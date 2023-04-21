@@ -44,6 +44,19 @@ npx hardhat starknet-compile-cairo1 cairo1-contracts/cairo1.cairo
 npx hardhat test test/declare-v2.test.ts
 ```
 
+#### Run the cairo1 contract on devnet
+
+```
+sudo docker pull shardlabs/starknet-devnet:0.5.0a0
+sudo docker run -p 5050:5050 shardlabs/starknet-devnet:0.5.0a0 --seed 42
+```
+
+Set default network in `hardhat.config.ts` to `devnet`. Run a test that interacts with the compiled contract on the devnet:
+
+```
+npx hardhat test test/declare-v2.test.ts
+```
+
 ## Supported `starknet-hardhat-plugin` version
 
 `package.json` is fixed to use the latest `starknet-hardhat-plugin` version this example repository is synced with.
