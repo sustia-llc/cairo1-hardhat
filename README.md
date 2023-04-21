@@ -25,12 +25,23 @@ npx hardhat starknet-compile contracts/contract.cairo
 
 ### Set up environment variables
 
-Some scripts require environment variables (search for usage of `ensureEnvVar` in the repo). You can define these variables in an `.env` file in the project root.
+Some scripts require environment variables (search for usage of `ensureEnvVar` in the repo). You can define these variables in an `.env` file in the project root. If you want to use the OZ devnet accounts in env.example, uncomment "--seed", "42", in the `hardhat.config.ts` file.
 
 #### Run a test that interacts with the compiled contract
 
 ```
 npx hardhat test test/quick-test.ts
+```
+
+#### Compile a Cairo1 contract
+
+```
+npx hardhat starknet-compile-cairo1 cairo1-contracts/cairo1.cairo
+```
+
+#### Run a test that interacts with the compiled Cairo1 contract
+```
+npx hardhat test test/declare-v2.test.ts
 ```
 
 ## Supported `starknet-hardhat-plugin` version
