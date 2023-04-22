@@ -18,7 +18,7 @@ const config: HardhatUserConfig = {
         // venv: "active",
         recompile: false,
         // manifestPath: "path/to/Cargo.toml",
-        network: "integrated-devnet",
+        network: "devnet",
         wallets: {
             OpenZeppelin: {
                 accountName: "OpenZeppelin",

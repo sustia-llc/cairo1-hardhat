@@ -25,6 +25,9 @@ describe("Class declaration", function () {
             },
             { maxFee: deployFee.amount }
         );
+
+        console.log("Deployed contract at address: ", contract.address);
+
         const balanceBefore = await contract.call("get_balance");
         expect(balanceBefore.response).to.deep.equal(10n);
 

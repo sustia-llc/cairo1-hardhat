@@ -43,9 +43,11 @@ npm test
 
 Update version of the docker image by looking at the https://github.com/0xSpaceShard/starknet-hardhat-plugin
 
+updgraded to starknet-devnet:0.5.0a1 with fix: https://github.com/0xSpaceShard/starknet-devnet/pull/426
+
 ```bash
-sudo docker pull shardlabs/starknet-devnet:0.5.0a0
-sudo docker run -p 5050:5050 shardlabs/starknet-devnet:0.5.0a0 --seed 42
+sudo docker pull shardlabs/starknet-devnet:0.5.0a1
+sudo docker run -p 5050:5050 shardlabs/starknet-devnet:0.5.0a1 --seed 42
 ```
 
 Set default network in `hardhat.config.ts` to `devnet`. In another console, run a test that interacts with the compiled contract on the devnet:
