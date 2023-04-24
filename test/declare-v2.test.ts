@@ -2,6 +2,16 @@ import { expect } from "chai";
 import { starknet } from "hardhat";
 import { TIMEOUT } from "./constants";
 import { getOZAccount } from "./util";
+import { hash } from "starknet";
+
+export interface StringMap {
+    [key: string]: string;
+}
+
+export interface DecodedEvent {
+    name: string;
+    data: StringMap;
+}
 
 describe("Class declaration", function () {
     this.timeout(TIMEOUT);
@@ -31,15 +41,35 @@ describe("Class declaration", function () {
         const balanceBefore = await contract.call("get_balance");
         expect(balanceBefore.response).to.deep.equal(10n);
 
-        const args = { amount1: 10n, amount2: 20n };
+        const args = { amount: 10n };
         const fee = await account.estimateFee(contract, "increase_balance", args);
         console.log("Estimated invoke fee:", fee);
 
-        await account.invoke(contract, "increase_balance", args, { maxFee: fee.amount * 2n });
+        const txHashIncreaseBalance = await account.invoke(contract, "increase_balance", args, { maxFee: fee.amount * 2n });
         console.log("Increased balance");
+
+        const receiptIncreaseBalance = await starknet.getTransactionReceipt(txHashIncreaseBalance);
+        if (receiptIncreaseBalance.status) {
+            console.log(receiptIncreaseBalance.status);
+        }
+
+        const eventsIncreaseBalance = receiptIncreaseBalance.events;
+
+        for (const event of eventsIncreaseBalance) {
+            // skip events originating from other contracts, e.g. fee token
+            if (parseInt(event.from_address, 16) !== parseInt(contract.address, 16)) continue;
+
+            const rawEventData = event.data.map(BigInt).join(" ");
+            // encoded event name guaranteed to be at index 0
+            const hashedEventName = event.keys[0];
+            if (hashedEventName === hash.getSelectorFromName("BalanceIncreased")) {
+                console.log("BalanceIncreased event was emitted");
+                expect(rawEventData).to.deep.equal("20");
+            }
+        }
 
         const balanceAfter = await contract.call("get_balance");
         console.log("balance after", balanceAfter.response);
-        expect(balanceAfter.response).to.deep.equal(40n);
+        expect(balanceAfter.response).to.deep.equal(20n);
     });
 });
