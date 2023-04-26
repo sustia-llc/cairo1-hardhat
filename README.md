@@ -20,7 +20,7 @@ npm ci
 #### Compile a Cairo1 contract
 
 ```bash
-npx hardhat starknet-compile-cairo1 cairo1-contracts/cairo1.cairo
+npx hardhat run scripts/compile-contract.ts
 ```
 
 ### Set up environment variables
@@ -39,7 +39,7 @@ Set default network in `hardhat.config.ts` to `integrated-devnet`, then execute:
 npm test
 ```
 
-#### Run the Cairo1 contract on devnet
+#### Deploy the Cairo1 contract to devnet
 
 Update version of the docker image by looking at the https://github.com/0xSpaceShard/starknet-hardhat-plugin
 
@@ -50,8 +50,10 @@ sudo docker pull shardlabs/starknet-devnet:0.5.0a1
 sudo docker run -p 5050:5050 shardlabs/starknet-devnet:0.5.0a1 --seed 42
 ```
 
-Set default network in `hardhat.config.ts` to `devnet`. In another console, run a test that interacts with the compiled contract on the devnet:
+Declare and deploy the contract to devnet:
 
 ```bash
-npm test
+HARDHAT_NETWORK=devnet node --require hardhat/register scripts/deploy.ts
 ```
+
+Copy the contract address to the dapp
