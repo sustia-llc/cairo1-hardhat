@@ -72,4 +72,14 @@ describe("Class declaration", function () {
         console.log("balance after", balanceAfter.response);
         expect(balanceAfter.response).to.deep.equal(20n);
     });
+    it("should fund a Argent X wallet", async function () {
+        // FIXME: Declare and deploy the Argent X Proxy contract
+        // const account = await getOZAccount();
+        // const contractFactoryAXproxy = await starknet.getContractFactory("Proxy");
+        // const proxyClassHash = await contractFactoryAXproxy.getClassHash();
+        // const classHashAXproxy = await account.declare({ classHash: "0x25ec026985a3bf9d0cc1fe17326b245dfdc3ff89b8fde106542a3ea56c5a918",});// as Fee of Declare function can't be estimated, let's jump in with a rough and over-evaluated value....
+        // console.log("classHashAXproxy =", classHashAXproxy);
+
+        await starknet.devnet.mint("0x00382a38e6dE389D0325fc372c33717793bbbAD4a6Cd87368DAedb9ea4b6D504", 100000000000000000);
+    });
 });

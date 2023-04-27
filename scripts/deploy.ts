@@ -1,8 +1,8 @@
 import hardhat from "hardhat";
-import { getOZAccount } from "../test/util";
+import { getOZAccountForDeploy } from "../test/util";
 
 async function main() {
-    const account = await getOZAccount();
+    const account = await getOZAccountForDeploy();
     const contractFactory = await hardhat.starknet.getContractFactory("cairo1");
     await account.declare(contractFactory, { maxFee: 1e18 });
     const contract = await account.deploy(contractFactory, { initial_balance: 0 });

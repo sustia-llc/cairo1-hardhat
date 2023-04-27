@@ -28,6 +28,9 @@ const config: HardhatUserConfig = {
         }
     },
     networks: {
+        alphaGoerli: {
+            url: "https://alpha4.starknet.io"
+        },
         devnet: {
             url: "http://127.0.0.1:5050"
         },
